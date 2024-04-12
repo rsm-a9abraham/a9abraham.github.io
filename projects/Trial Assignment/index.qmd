@@ -1,0 +1,49 @@
+---
+title: Making a quarto page
+subtitle: trial
+author: Allen Abraham
+date: today
+toc: True
+---
+
+```{python}
+#| message: true
+#| echo: true
+import pandas as pd
+
+```
+
+
+hi how are you
+
+# Section 1: Basic text formatting
+
+## Sub-section
+
+### Header
+
+1. some
+1. numbers
+1. in
+1. a 
+1. list
+
+text can be **bold**, or _italics_, or ~~strikethrough~~
+
+My website is <http://www.google.com> or [here](https://www.google.com)
+
+# Section 2: Some Math
+
+If you want inline $y = mx + b$
+
+$$
+
+$$
+
+# Section 3: 
+
+You can do inline code like so `python x=3`
+
+```{python}
+
+```

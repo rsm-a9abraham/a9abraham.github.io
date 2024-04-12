@@ -1,0 +1,20 @@
+---
+title: "Allen Abraham"
+image: "files/profile_pic.png"
+
+about: 
+  template: jolla
+  links:
+    - icon: envelope
+      href: mailto:a9abraham@ucsd.edu
+    - icon: linkedin
+      href: https://www.linkedin.com/in/allenabraham7/
+
+
+   
+
+---
+
+Marketing Analytics Website
+
+
