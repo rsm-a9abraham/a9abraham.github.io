@@ -591,7 +591,40 @@ The plot shows the cumulative average of the differences in "amount" between the
 
 _to do: Make 4 histograms like those on slide 44 from our first class at sample sizes 50, 200, 500, and 1000 and explain these plots to the reader. To do this for a sample size of e.g. 50, take 50 draws from each of the control and treatment distributions, and calculate the average difference between those draws. Then repeat that process 999 more times so that you have 1000 averages. Plot the histogram of those averages. Comment on whether zero is in the "middle" of the distribution or whether it's in the "tail."_
 
+```{python}
+#| message: false
+#| echo: true
 
+import numpy as np
+import matplotlib.pyplot as plt
 
+treatment_amount = data[data['treatment'] == 1]['amount']
+control_amount = data[data['treatment'] == 0]['amount']
 
+true_diff =  treatment_amount.mean()-control_amount.mean()
+print('True Difference in mean of "amount" between Control and Treatment:', true_diff)
+
+# Simulate 1000 draws of 50, 200, 500, and 1000 from both the control and treatment distributions
+sample_sizes = [50, 200, 500, 1000]
+num_simulations = 1000
+
+np.random.seed(0)
+
+for sample_size in sample_sizes:
+    sample_diffs = []
+    for _ in range(num_simulations):
+        simulated_control_draws = np.random.choice(control_amount, sample_size, replace=False)
+        simulated_treatment_draws = np.random.choice(treatment_amount, sample_size, replace=False)
+        sample_diffs.append(simulated_treatment_draws.mean() - simulated_control_draws.mean())
+
+    plt.hist(sample_diffs, bins=20, color='skyblue', edgecolor='black')
+    plt.axvline(x=true_diff, color='red', linestyle='--', label='True Difference in Means')
+    plt.xlabel('Sample Difference in Means')
+    plt.ylabel('Frequency')
+    plt.title(f'Histogram of Sample Differences in Means (Sample Size = {sample_size})')
+    plt.legend()
+    plt.show()
+```
+
+The above histogram illustrates the Central Limit Theorem. As the sample size increases, the sampling distribution of the average of differences between the mean becomes normal. The zero is in the middle of the distribution because the true difference in mean of the `amount` variable between the control and treament is close to zero and the difference is not significant as proven earlier. 
 
