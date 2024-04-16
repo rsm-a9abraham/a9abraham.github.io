@@ -728,4 +728,5 @@ for sample_size in sample_sizes:
     plt.show()
 ```
 
-The above histogram illustrates the Central Limit Theorem. As the sample size increases, the sampling distribution of the average of differences between the mean becomes normal. The zero is towards middle of the distribution because the true difference in response rates between the control and treament is 0.004.
+The above histogram illustrates the Central Limit Theorem. As the sample size increases, the distribution of the average of differences between the mean becomes normal. The zero is towards middle of the distribution because the true difference in response rates between the control and treament is 0.004. 
+

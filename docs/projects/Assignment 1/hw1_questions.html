@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Allen Abraham">
-<meta name="dcterms.date" content="2024-04-15">
+<meta name="dcterms.date" content="2024-04-16">
 
 <title>Allen Abraham - A Replication of Karlan and List (2007)</title>
 <style>
@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 15, 2024</p>
+      <p class="date">April 16, 2024</p>
     </div>
   </div>
   
@@ -212,13 +212,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<div id="96d6c472" class="cell" data-message="false" data-execution_count="1">
+<div id="a3d5243e" class="cell" data-message="false" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_stata(<span class="st">'data/karlan_list_2007.dta'</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data.to_csv(<span class="st">'data/karlan_list_2007.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
 
@@ -764,7 +764,7 @@ Variable Definitions
 <section id="months-since-last-donation-mrm2" class="level5">
 <h5 class="anchored" data-anchor-id="months-since-last-donation-mrm2">Months Since Last Donation (mrm2)</h5>
 <p>Using the variable <code>mrm2</code>, I test the balance of the treatment and control groups. I first calculate the difference in means between the treatment and control groups and then use both a t-test and linear regression to test whether this difference is statistically significant at the 95% confidence level.</p>
-<div id="41ee34b5" class="cell" data-message="false" data-execution_count="2">
+<div id="8bf9ec68" class="cell" data-message="false" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#first, let's test the balance of the treatment and control groups on the variable mrm2 using a t-test</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#average months since last donation for the treatment group</span></span>
@@ -808,7 +808,7 @@ t-statistic for mrm2:  0.11953214935937886
 p-value for mrm2:  0.9048542505673348</code></pre>
 </div>
 </div>
-<div id="94abff66" class="cell" data-message="false" data-execution_count="3">
+<div id="5a09ac25" class="cell" data-message="false" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#now let's test the balance of the treatment and control groups on the variable mrm2 using a linear regression</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -835,7 +835,7 @@ p-value for mrm2:  0.9048859731777759</code></pre>
 <section id="highest-previous-contribution-hpa" class="level5">
 <h5 class="anchored" data-anchor-id="highest-previous-contribution-hpa">Highest Previous Contribution (hpa)</h5>
 <p>Next, I test the balance of the treatment and control groups on the variable <code>hpa</code> using both a t-test and linear regression.</p>
-<div id="61a9378b" class="cell" data-message="false" data-execution_count="4">
+<div id="6b30a5de" class="cell" data-message="false" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#average highest previous contribution for the treatment group</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>treatment_hpa <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'hpa'</span>].mean()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -874,7 +874,7 @@ t-statistic for hpa:  0.9703896843548359
 p-value for hpa:  0.3318569750696071</code></pre>
 </div>
 </div>
-<div id="fa9d8a25" class="cell" data-message="false" data-execution_count="5">
+<div id="f15dc01e" class="cell" data-message="false" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#now let's test the balance of the treatment and control groups on the variable hpa using a linear regression</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(<span class="st">'hpa ~ treatment'</span>, data<span class="op">=</span>data)</span>
@@ -900,7 +900,7 @@ p-value for hpa:  0.3450987657186726</code></pre>
 <section id="number-of-prior-donations-freq" class="level5">
 <h5 class="anchored" data-anchor-id="number-of-prior-donations-freq">Number of Prior Donations (freq)</h5>
 <p>Finally, I test the balance of the treatment and control groups on the variable <code>freq</code> using both a t-test and linear regression.</p>
-<div id="eac15cf2" class="cell" data-message="false" data-execution_count="6">
+<div id="8d7ff6ad" class="cell" data-message="false" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#average number of prior donations for the treatment group</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>treatment_freq <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'freq'</span>].mean()</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -940,7 +940,7 @@ t-statistic for freq:  -0.11084502380904246
 p-value for freq:  0.9117396856546793</code></pre>
 </div>
 </div>
-<div id="297dafbe" class="cell" data-message="false" data-execution_count="7">
+<div id="de9c99a4" class="cell" data-message="false" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#now let's test the balance of the treatment and control groups on the variable freq using a linear regression</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(<span class="st">'freq ~ treatment'</span>, data<span class="op">=</span>data)</span>
@@ -967,7 +967,7 @@ p-value for freq:  0.9117016644344662</code></pre>
 <section id="charitable-contribution-made" class="level3">
 <h3 class="anchored" data-anchor-id="charitable-contribution-made">Charitable Contribution Made</h3>
 <p>First, I analyze whether matched donations lead to an increased response rate of making a donation.</p>
-<div id="d91ba816" class="cell" data-message="false" data-execution_count="8">
+<div id="ffef2486" class="cell" data-message="false" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#proportion of people who donated in the treatment group</span></span>
@@ -988,7 +988,7 @@ p-value for freq:  0.9117016644344662</code></pre>
 </div>
 </div>
 </div>
-<div id="0b37a5c7" class="cell" data-message="false" data-execution_count="9">
+<div id="fd7d8eea" class="cell" data-message="false" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#t-test between treatment and control groups on the binary outcome of whether any charitable donation was made</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1008,7 +1008,7 @@ t-statistic:  3.101361000543946
 p-value:  0.0019274025949016982</code></pre>
 </div>
 </div>
-<div id="ccd6b4f0" class="cell" data-message="false" data-execution_count="10">
+<div id="fd1179d7" class="cell" data-message="false" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#bivariate linear regression that demonstrates the same finding</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(data[<span class="st">'gave'</span>], sm.add_constant(data[<span class="st">'treatment'</span>]))</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
@@ -1029,7 +1029,7 @@ p-value:  0.0019274025949017242</code></pre>
 </div>
 <p>The p-value of .002 for both the t-test and linear regression indicates that the difference in response rates between the treatment and control groups is statistically significant at the 95% confidence level. If the null hypothesis of the response rate being the same for both control and treatment group is true, we would expect to see a difference in response rates as extreme as the one we observed in only 0.2% of cases. Therefore, we reject the null hypothesis that the treatment and control groups are the same with respect to the likelihood of making a charitable donation.</p>
 <p>This suggests that the treatment of receiving a matched donation led to an increased likelihood of making a charitable donation. This finding is consistent with the results reported in Table 2a Panel A of the paper and their interpretation that the treatment effect is statistically significant.</p>
-<div id="4949d327" class="cell" data-message="false" data-execution_count="11">
+<div id="116371da" class="cell" data-message="false" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.Probit(data[<span class="st">'gave'</span>], sm.add_constant(data[<span class="st">'treatment'</span>]))</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1053,7 +1053,7 @@ coefficient 0.08678462244745848
 z-statistic:  3.112930073795023
 p-value:  0.0018523990147783487</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Probit Regression Results</caption>
 <tbody>
@@ -1077,13 +1077,13 @@ p-value:  0.0018523990147783487</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Mon, 15 Apr 2024</td>
+<td>Tue, 16 Apr 2024</td>
 <td data-quarto-table-cell-role="th">Pseudo R-squ.:</td>
 <td>0.0009783</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>17:32:53</td>
+<td>16:49:52</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
 <td>-5030.5</td>
 </tr>
@@ -1140,7 +1140,7 @@ p-value:  0.0018523990147783487</code></pre>
 <section id="differences-between-match-rates" class="level3">
 <h3 class="anchored" data-anchor-id="differences-between-match-rates">Differences between Match Rates</h3>
 <p>Next, I assess the effectiveness of different sizes of matched donations on the response rate using a series of t-tests and linear regressions.</p>
-<div id="b6001062" class="cell" data-message="false" data-execution_count="12">
+<div id="7125f411" class="cell" data-message="false" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#t-test between 1:1 and 2:1 match ratios on the binary outcome of whether any charitable donation was made</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>treatment_gave_1 <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>][data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>treatment_gave_2 <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>][data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">2</span>]</span>
@@ -1158,7 +1158,7 @@ t-statistic:  0.96504713432247
 p-value:  0.33453168549723933</code></pre>
 </div>
 </div>
-<div id="e60b6dce" class="cell" data-message="false" data-execution_count="13">
+<div id="557714cf" class="cell" data-message="false" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#t-test between 2:1 and 3:1 match ratios on the binary outcome of whether any charitable donation was made</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>treatment_gave_2 <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>][data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">2</span>]</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>treatment_gave_3 <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>][data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">3</span>]</span>
@@ -1176,7 +1176,7 @@ t-statistic:  0.05011583793874515
 p-value:  0.9600305283739325</code></pre>
 </div>
 </div>
-<div id="948d38c6" class="cell" data-message="false" data-execution_count="14">
+<div id="d02f5968" class="cell" data-message="false" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#t-test between 1:1 and 3:1 match ratios on the binary outcome of whether any charitable donation was made</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>treatment_gave_1 <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>][data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>treatment_gave_3 <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'gave'</span>][data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">3</span>]</span>
@@ -1195,7 +1195,7 @@ p-value:  0.3101046637086672</code></pre>
 </div>
 </div>
 <p>The t-tests and the resulting p-values show that the difference in response rates between the 1:1 and 2:1 match ratios, the 2:1 and 3:1 match ratios, and the 1:1 and 3:1 match ratios are all statistically insignificant at the 95% confidence level. The null hypotheses that the response rates are the same across these groups cannot be rejected.</p>
-<div id="0a5215bb" class="cell" data-message="false" data-execution_count="15">
+<div id="833daf7c" class="cell" data-message="false" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new variable 'ratio1' that is equal to 1 if the match ratio is 1:1 and 0 otherwise</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'ratio1'</span>] <span class="op">=</span> (data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">1</span>).astype(<span class="bu">int</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1203,7 +1203,7 @@ p-value:  0.3101046637086672</code></pre>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#show summary of regression results with just the coefficients and p-values without any notes</span></span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>results.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
 <tbody>
 <tr class="odd">
@@ -1256,7 +1256,7 @@ p-value:  0.3101046637086672</code></pre>
 </div>
 </div>
 <p>The regression results show that the coefficients for <code>ratio1</code>, <code>ratio2</code>, and <code>ratio3</code> are all statistically insignificant at the 90% confidence level. Ratio of 1:1 has a p-value of 0.097 which is close to the 90% confidence level. This could suggest that the 1:1 ratio results in a lower response rate compared to the other ratios, although it is not very significant. The p-values for <code>ratio2</code> and <code>ratio3</code> are 0.006 and 0.005, suggesting that the 2:1 and 3:1 match ratios do not have a significant effect on the likelihood of making a charitable donation compared to the overall average for the treatment group.</p>
-<div id="41476fbb" class="cell" data-message="false" data-execution_count="16">
+<div id="33ef37bf" class="cell" data-message="false" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the response rate difference between the 1:1 and 2:1 match ratios</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>diff_1_2 <span class="op">=</span> data[(data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">2</span>)][<span class="st">'gave'</span>].mean() <span class="op">-</span> data[(data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">&amp;</span> (data[<span class="st">'ratio'</span>] <span class="op">==</span> <span class="dv">1</span>)][<span class="st">'gave'</span>].mean()</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1270,7 +1270,7 @@ p-value:  0.3101046637086672</code></pre>
 difference in response rates between 2:1 and 3:1 match ratios:  0.00010002398025293902</code></pre>
 </div>
 </div>
-<div id="093b780d" class="cell" data-message="false" data-execution_count="17">
+<div id="03714c92" class="cell" data-message="false" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the response rate difference between the 1:1 and 2:1 match ratios using the coefficients from the regression</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>diff_1_2_coef <span class="op">=</span> results.params[<span class="st">'ratio2'</span>] <span class="op">-</span> results.params[<span class="st">'ratio1'</span>]</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1291,7 +1291,7 @@ difference in response rates between 2:1 and 3:1 match ratios using regression c
 <h3 class="anchored" data-anchor-id="size-of-charitable-contribution">Size of Charitable Contribution</h3>
 <p>In this subsection, I analyze the effect of the size of matched donation on the size of the charitable contribution.</p>
 <p>First, I analyze the difference in donation amounts between treatment and control group regardless of whether a donation was made using t-test and linear regression.</p>
-<div id="ea6c3aa1" class="cell" data-message="false" data-execution_count="18">
+<div id="08ff3a5e" class="cell" data-message="false" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#t-test between treatment and control groups on the donation amount</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>treatment_amount <span class="op">=</span> data[data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'amount'</span>]</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>control_amount <span class="op">=</span> data[data[<span class="st">'control'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'amount'</span>]</span>
@@ -1309,7 +1309,7 @@ t-statistic:  1.8605020225753781
 p-value:  0.06282038947470686</code></pre>
 </div>
 </div>
-<div id="3eb1b819" class="cell" data-message="false" data-execution_count="19">
+<div id="59c694a8" class="cell" data-message="false" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#bivariate linear regression of the donation amount on the treatment status</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(<span class="st">'amount ~ treatment'</span>, data<span class="op">=</span>data)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
@@ -1330,7 +1330,7 @@ p-value:  0.06282029492108901</code></pre>
 </div>
 <p>The p-value (.063) for the difference in donation amounts between the treatment and control groups is statistically significant at the 90% confidence level. This suggests that the treatment of receiving a matched donation led to a higher average donation amount.</p>
 <p>Now I will limit the data to just people who made a donation and repeat the previous analysis. This regression allows me to analyze how much respondents donate conditional on donating some positive amount. The regression coefficients will help me interpret the effect of the treatment on the donation amount among people who donated.</p>
-<div id="8b95e890" class="cell" data-message="false" data-execution_count="20">
+<div id="151eff53" class="cell" data-message="false" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#limit the data to just people who made a donation</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>donated_data <span class="op">=</span> data[data[<span class="st">'gave'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1351,7 +1351,7 @@ t-statistic:  -0.5808388615237938
 p-value:  0.5614758782284279</code></pre>
 </div>
 </div>
-<div id="d612c9ad" class="cell" data-message="false" data-execution_count="21">
+<div id="b12ff5fb" class="cell" data-message="false" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#bivariate linear regression of the donation amount on the treatment status among people who donated</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(<span class="st">'amount ~ treatment'</span>, data<span class="op">=</span>donated_data)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
@@ -1373,7 +1373,7 @@ p-value:  0.5614755766155095</code></pre>
 <p>Among all the people who donated, those who did not recieve the treatment of matching donation actually donated more on average. However, the p-value (.56) suggests that this difference is not statistically significant. So we cannot conclude that the treatment of receiving a matched donation led to a higher average donation amount among people who donated.</p>
 <p>We can conclude that if an individual already had the intention to donate with or without the match, the treatment of receiving a matched donation did not lead to a higher average donation amount.</p>
 <p>Finally, I will plot histograms of the donation amounts for the treatment and control groups among people who donated to visualize the distribution.</p>
-<div id="985d99b3" class="cell" data-message="false" data-execution_count="22">
+<div id="909b5cef" class="cell" data-message="false" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot histogram of donation amounts for the treatment group among people who donated</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>plt.hist(donated_data[donated_data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'amount'</span>], bins<span class="op">=</span><span class="dv">20</span>, color<span class="op">=</span><span class="st">'skyblue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>plt.axvline(donated_data[donated_data[<span class="st">'treatment'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'amount'</span>].mean(), color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'dashed'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Mean Donation Amount'</span>)</span>
@@ -1417,7 +1417,7 @@ p-value:  0.5614755766155095</code></pre>
 <section id="law-of-large-numbers" class="level3">
 <h3 class="anchored" data-anchor-id="law-of-large-numbers">Law of Large Numbers</h3>
 <p>We will simulate 10,000 draws from the control distribution and 10,000 draws from the treatment distribution. We will then calculate the vector of 10,000 differences in the response rates between the treatment and control groups. Finally, we will plot the cumulative average of the vector of differences to demonstrate the Law of Large Numbers.</p>
-<div id="439f4359" class="cell" data-message="false" data-execution_count="23">
+<div id="72e59851" class="cell" data-message="false" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1462,7 +1462,7 @@ p-value:  0.5614755766155095</code></pre>
 <section id="central-limit-theorem" class="level3">
 <h3 class="anchored" data-anchor-id="central-limit-theorem">Central Limit Theorem</h3>
 <p>We will simulate 1000 calculations for 50, 200, 500, and 1000 draws from both the control and treatment distributions. We will calculate the average difference in the response rate between the treatment and control groups for each draw. Finally, we will plot histograms of the average differences in the response rates for each sample size to demonstrate the Central Limit Theorem.</p>
-<div id="89adf8ae" class="cell" data-message="false" data-execution_count="24">
+<div id="e26d5e73" class="cell" data-message="false" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1524,7 +1524,7 @@ p-value:  0.5614755766155095</code></pre>
 </div>
 </div>
 </div>
-<p>The above histogram illustrates the Central Limit Theorem. As the sample size increases, the sampling distribution of the average of differences between the mean becomes normal. The zero is in the middle of the distribution because the true difference in mean of the <code>amount</code> variable between the control and treament is close to zero and the difference is not significant as proven earlier.</p>
+<p>The above histogram illustrates the Central Limit Theorem. As the sample size increases, the sampling distribution of the average of differences between the mean becomes normal. The zero is towards middle of the distribution because the true difference in response rates between the control and treament is 0.004.</p>
 
 
 </section>
