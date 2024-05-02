@@ -216,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data" class="level3">
 <h3 class="anchored" data-anchor-id="data">Data</h3>
 <p>We will start by reading in the data and conducting some exploratory data analysis to understand the data better.</p>
-<div id="9f5729aa" class="cell" data-execution_count="1">
+<div id="2a236301" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"data/blueprinty.csv"</span>)</span>
@@ -283,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="2840eb0c" class="cell" data-execution_count="2">
+<div id="842d4fd0" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>mean_patents_customer <span class="op">=</span> data[data[<span class="st">'iscustomer'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'patents'</span>].mean()</span>
@@ -314,7 +314,7 @@ Average number of patents for non-customers:  3.6231772831926325</code></pre>
 </div>
 </div>
 <p>We will conduct a t-test to determine if the difference in the number of patents awarded is statistically significant by customer status (whether the firm is a customer of Blueprinty or not).</p>
-<div id="4514ec75" class="cell" data-execution_count="3">
+<div id="18c0054a" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ttest_ind(data[data[<span class="st">'iscustomer'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'patents'</span>], data[data[<span class="st">'iscustomer'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'patents'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -325,7 +325,7 @@ Average number of patents for non-customers:  3.6231772831926325</code></pre>
 <p>The histogram show that there are a lot more non-customers than customers in the dataset. The average number of patents for Blueprinty customers is slightly higher at 4.09 than for non-customers at 3.62. The t-test shows that this difference is statistically significant at the 5% level. However, this analysis does not account for other factors that may influence the number of patents awarded, such as the age and regional location of the firms.</p>
 <p>Blueprinty customers are not selected at random. It may be important to account for systematic differences in the age and regional location of customers vs non-customers.</p>
 <p>We will compare the differences in regions and ages by customer status. We will also conduct t-tests to determine if the differences in proportions of firms in each region and the difference in means of firm ages are statistically significant by customer status.</p>
-<div id="7363c815" class="cell" data-execution_count="4">
+<div id="fa3c5ee5" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data.groupby(<span class="st">"iscustomer"</span>)[<span class="st">"region"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).unstack().plot(kind<span class="op">=</span><span class="st">'bar'</span>, stacked<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Proportion of Firms"</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Customer Status"</span>)</span>
@@ -367,7 +367,7 @@ Average firm age of non-customers:  26.691481197237145</code></pre>
 </div>
 </div>
 <p>We conduct multiple t-tests to determine if the difference in proportions of firms in each region is statistically significant by customer status.</p>
-<div id="631ff45f" class="cell" data-execution_count="5">
+<div id="7ff86438" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the proportion of firms in each region by customer status</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>region_proportions <span class="op">=</span> data.groupby(<span class="st">"iscustomer"</span>)[<span class="st">"region"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Region Proportions by Customer Status:"</span>)</span>
@@ -401,7 +401,7 @@ iscustomer
 </div>
 </div>
 <p>We conduct a t-test to determine if the difference in means of firm ages is statistically significant by customer status.</p>
-<div id="cd4492db" class="cell" data-execution_count="6">
+<div id="681bebc3" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ttest_ind(data[data[<span class="st">'iscustomer'</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">'age'</span>], data[data[<span class="st">'iscustomer'</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">'age'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>TtestResult(statistic=-4.621997648306684, pvalue=4.127085667816596e-06, df=1498.0)</code></pre>
@@ -417,7 +417,7 @@ iscustomer
 <p>The log-likelihood function for a sample <span class="math inline">\(( Y_1, Y_2, \ldots, Y_n)\)</span> from a Poisson distribution with parameter <span class="math inline">\(( \lambda)\)</span> is given by:</p>
 <p><span class="math inline">\(\ell(\lambda; y_1, y_2, \ldots, y_n) = \sum_{i=1}^n y_i \log(\lambda) - n\lambda - \sum_{i=1}^n \log(y_i!)\)</span></p>
 <p>Next, we will code the log-likelihood function for the Poisson model. This is a function of lambda and Y. The function should return the log-likelihood value for a given rate parameter lambda and a set of observed counts Y.</p>
-<div id="9634568e" class="cell" data-execution_count="7">
+<div id="82dabfc1" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> poisson_loglikelihood(lambda_, Y):</span>
@@ -442,7 +442,7 @@ iscustomer
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(Y <span class="op">*</span> np.log(lambda_) <span class="op">-</span> lambda_ <span class="op">-</span> log_factorials)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will use the above function to plot a range of lambdas (0.1-10) on the horizontal axis and the log likelihood on the vertical axis. We will use the observed patent counts as Y. The maximum likelihood estimate (MLE) of lambda is the value that maximizes the log-likelihood function.</p>
-<div id="d5378dca" class="cell" data-execution_count="8">
+<div id="ad9fb789" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> data[<span class="st">'patents'</span>].values  <span class="co"># Extracting patent counts</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the range of lambda values from a small positive number up to a reasonable upper limit</span></span>
@@ -467,7 +467,7 @@ iscustomer
 </div>
 <p>We will use optimization to find the MLE of lambda. We will use the <code>scipy.optimize.minimize</code> function to minimize the negative log-likelihood function. The negative log-likelihood is the negative of the log-likelihood function, which we want to minimize. We will set the bounds of the optimization to ensure that lambda is positive.</p>
 <p>We will also calculate the mean number of patents per firm which should be close to the MLE of lambda since the Poisson distribution has only one parameter which is the rate parameter lambda. The mean of a Poisson distribution is equal to its rate parameter.</p>
-<div id="cd1ce685" class="cell" data-execution_count="9">
+<div id="ec946996" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> gammaln</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -502,7 +502,7 @@ Mean number of patents per firm:  3.6846666666666668</code></pre>
 <p>Next, we extend our simple Poisson model to a Poisson Regression Model such that <span class="math inline">\(Y_i = \text{Poisson}(\lambda_i)\)</span> where <span class="math inline">\(\lambda_i = \exp(X_i'\beta)\)</span>. The interpretation is that the success rate of patent awards is not constant across all firms (<span class="math inline">\(\lambda\)</span>) but rather is a function of firm characteristics <span class="math inline">\(X_i\)</span>. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.</p>
 <p>We will Update our log-likelihood function with an additional argument to take in a covariate matrix X. We will also change the parameter of the model from lambda to the beta vector. In this model, lambda must be a positive number, so we choose the inverse link function g() to be exp() so that_ <span class="math inline">\(\lambda_i = e^{X_i'\beta}\)</span>.</p>
 <p>We will make sure that the first column of X are all 1’s to enable a constant term in the model, and the subsequent columns are age, age squared, binary variables for all but one of the regions, and the binary iscustomer variable.</p>
-<div id="79f259a7" class="cell" data-message="false" data-execution_count="10">
+<div id="ae4a7f71" class="cell" data-message="false" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the covariate matrix X</span></span>
@@ -534,7 +534,7 @@ Mean number of patents per firm:  3.6846666666666668</code></pre>
 </div>
 </div>
 <p>Next, we will use the updated function with scipy.optimize to find the MLE vector and the Hessian of the Poisson model with covariates. We will use the Hessian to find standard errors of the beta parameter.</p>
-<div id="63547c3a" class="cell" data-execution_count="11">
+<div id="a8753a37" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -559,20 +559,20 @@ Mean number of patents per firm:  3.6846666666666668</code></pre>
 <span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Optimization failed:"</span>, result.message)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>MLE of beta: [ 1.28539498  1.04647703 -1.14086321  0.03989462  0.04831426 -0.0066364
-  0.01905682  0.0204638 ]</code></pre>
+<pre><code>MLE of beta: [ 1.28539574  1.04645803 -1.14084402  0.03989475  0.04831526 -0.00663774
+  0.01905762  0.02046153]</code></pre>
 </div>
 </div>
-<div id="c61432c3" class="cell" data-execution_count="12">
+<div id="2ee90df1" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>hessian_matrix <span class="op">=</span> result.hess_inv.todense()</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>std_errors <span class="op">=</span> np.sqrt(np.diag(hessian_matrix))</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Standard errors:"</span>, std_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Standard errors: [0.82076691 1.06973023 0.82063401 0.49219156 0.40162856 0.52662195
- 0.63358785 0.68517075]</code></pre>
+<pre><code>Standard errors: [0.77517876 0.93643018 0.85862749 0.17524838 0.51392824 0.49658911
+ 0.9191293  0.52649659]</code></pre>
 </div>
 </div>
-<div id="776bbff3" class="cell" data-execution_count="13">
+<div id="2a9f44bd" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>coefficients_table <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Coefficient'</span>: beta_mle,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Standard Error'</span>: std_errors</span>
@@ -580,18 +580,18 @@ Mean number of patents per firm:  3.6846666666666668</code></pre>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coefficients_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Coefficient  Standard Error
-Intercept       1.285395        0.820767
-Age             1.046477        1.069730
-Age Squared    -1.140863        0.820634
-Is Customer     0.039895        0.492192
-Region_0        0.048314        0.401629
-Region_1       -0.006636        0.526622
-Region_2        0.019057        0.633588
-Region_3        0.020464        0.685171</code></pre>
+Intercept       1.285396        0.775179
+Age             1.046458        0.936430
+Age Squared    -1.140844        0.858627
+Is Customer     0.039895        0.175248
+Region_0        0.048315        0.513928
+Region_1       -0.006638        0.496589
+Region_2        0.019058        0.919129
+Region_3        0.020462        0.526497</code></pre>
 </div>
 </div>
-<p>We will verify the results using Python sm.GLM() function.</p>
-<div id="6c8ab483" class="cell" data-execution_count="14">
+<p>We will verify the results using Python’s sm.GLM() function.</p>
+<div id="f396c431" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the GLM model with Poisson family</span></span>
@@ -611,7 +611,7 @@ Model Family:                 Poisson   Df Model:                            7
 Link Function:                    Log   Scale:                          1.0000
 Method:                          IRLS   Log-Likelihood:                -3275.9
 Date:                Wed, 01 May 2024   Deviance:                       2178.8
-Time:                        19:10:45   Pearson chi2:                 2.11e+03
+Time:                        21:31:53   Pearson chi2:                 2.11e+03
 No. Iterations:                     5   Pseudo R-squ. (CS):             0.1152
 Covariance Type:            nonrobust                                         
 ==============================================================================
@@ -628,7 +628,8 @@ x7             0.0205      0.019      1.088      0.277      -0.016       0.057
 ==============================================================================</code></pre>
 </div>
 </div>
-<p><em>todo: Interpret the results. What do you conclude about the effect of Blueprinty’s software on patent success?</em></p>
+<p>Based on the Poisson regression model, the coefficients provide insights into the relationship between the covariates and the number of patents awarded. The coefficients for age and age squared are large and very significant suggesting that age of the firm has a significant impact on the number of patents awarded. The coefficient for the iscustomer variable is positive, indicating that firms using Blueprinty’s software tend to have more patents awarded but the coefficient is much smaller than the age coefficient, suggesting that age is a more significant factor. The coefficients for the region variables are small and not statistically significant, indicating that regional location may not have a significant impact on the number of patents awarded.</p>
+<p>Even though the average firm age of Blueprinty customers is lower than non-customers, the average number of patents awarded to customers is higher. This suggests that Blueprinty’s software may be associated with higher patent awards even after accounting for the age factor.</p>
 </section>
 </section>
 <section id="airbnb-case-study" class="level2">
@@ -666,7 +667,7 @@ Variable Definitions
 </div>
 <p><em>todo: Assume the number of reviews is a good proxy for the number of bookings. Perform some exploratory data analysis to get a feel for the data, handle or drop observations with missing values on relevant variables, build one or more models (e.g., a poisson regression model for the number of bookings as proxied by the number of reviews), and interpret model coefficients to describe variation in the number of reviews as a function of the variables provided.</em></p>
 <p>We will start by reading in the data</p>
-<div id="0cfbe997" class="cell" data-execution_count="15">
+<div id="93770b7a" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>airbnb_data <span class="op">=</span> pd.read_csv(<span class="st">"data/airbnb.csv"</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first few rows and summary statistics</span></span>
@@ -724,7 +725,7 @@ Variable Definitions
 </div>
 </div>
 <p>We will perform some data cleaning and transformation. We will convert date columns to datetime format, remove rows with missing values in host_since column since it has only 35 missing values, fill missing values for bathrooms and bedrooms (160 and 76 missing rows, respectively) with median, handle missing review scores by filling with median, convert instant_bookable to boolean, and remove the unnamed: 0 column.</p>
-<div id="c575d091" class="cell" data-execution_count="16">
+<div id="7a73b43d" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date columns to datetime format</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>airbnb_data[<span class="st">'last_scraped'</span>] <span class="op">=</span> pd.to_datetime(airbnb_data[<span class="st">'last_scraped'</span>], <span class="bu">format</span><span class="op">=</span><span class="st">'%m/</span><span class="sc">%d</span><span class="st">/%Y'</span>)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>airbnb_data[<span class="st">'host_since'</span>] <span class="op">=</span> pd.to_datetime(airbnb_data[<span class="st">'host_since'</span>], <span class="bu">format</span><span class="op">=</span><span class="st">'%m/</span><span class="sc">%d</span><span class="st">/%Y'</span>)</span>
@@ -786,7 +787,7 @@ Variable Definitions
 </div>
 </div>
 <p>We will perform some exploratory data analysis to get a feel for the data. We will plot histograms of key variables and a boxplot of price by room type.</p>
-<div id="70963183" class="cell" data-execution_count="17">
+<div id="05207116" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -831,7 +832,7 @@ Variable Definitions
 </div>
 </div>
 <p>Finally, we will build a Poisson regression model for the number of reviews as a function of the variables provided. We will use the <code>number_of_reviews</code> as the dependent variable and <code>days</code>, <code>room_type</code>, <code>bathrooms</code>, <code>bedrooms</code>, <code>price</code>, <code>review_scores_cleanliness</code>, <code>review_scores_location</code>, <code>review_scores_value</code>, and <code>instant_bookable</code> as independent variables. We will one-hot encode the <code>room_type</code> variable, standardize the features, and use the <code>scipy.optimize.minimize</code> function to find the MLE of the beta coefficients.</p>
-<div id="f42f2a05" class="cell" data-execution_count="18">
+<div id="5e67b654" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> exp</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows with missing values in relevant columns</span></span>
