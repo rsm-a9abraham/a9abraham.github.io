@@ -21,7 +21,7 @@ However, Blueprinty has collected data on 1,500 mature (non-startup) engineering
 
 ### Data
 
-_todo: Read in data._
+We will start by reading in the data and conducting some exploratory data analysis to understand the data better.
 
 ```{python}
 import pandas as pd
@@ -30,7 +30,6 @@ data = pd.read_csv("data/blueprinty.csv")
 data.head()
 ```
 
-_todo: Compare histograms and means of number of patents by customer status. What do you observe?_
 
 ```{python}
 import matplotlib.pyplot as plt
@@ -53,18 +52,19 @@ print("Average number of patents for non-customers: ", mean_patents_not_customer
 
 ```
 
-todo: conduct a t-test to determine if the difference in means is statistically significant.
+We will conduct a t-test to determine if the difference in the number of patents awarded is statistically significant by customer status (whether the firm is a customer of Blueprinty or not).
 
 ```{python}
 from scipy.stats import ttest_ind
 
 ttest_ind(data[data['iscustomer'] == 1]['patents'], data[data['iscustomer'] == 0]['patents'])
 ```
-The histograms show that there are a lot more non-customers than customers in the dataset. The average number of patents for Blueprinty customers is slightly higher at 4.09 than for non-customers at 3.62. The t-test shows that this difference is statistically significant at the 5% level.
+
+The histogram show that there are a lot more non-customers than customers in the dataset. The average number of patents for Blueprinty customers is slightly higher at 4.09 than for non-customers at 3.62. The t-test shows that this difference is statistically significant at the 5% level. However, this analysis does not account for other factors that may influence the number of patents awarded, such as the age and regional location of the firms.
 
 Blueprinty customers are not selected at random. It may be important to account for systematic differences in the age and regional location of customers vs non-customers.
 
-_todo: Compare regions and ages by customer status. What do you observe?_
+We will compare the differences in regions and ages by customer status. We will also conduct t-tests to determine if the differences in proportions of firms in each region and the difference in means of firm ages are statistically significant by customer status.
 
 ```{python}
 data.groupby("iscustomer")["region"].value_counts(normalize=True).unstack().plot(kind='bar', stacked=True)
@@ -91,7 +91,7 @@ print("Average firm age of non-customers: ", mean_age_not_customer)
 
 ```
 
-We conduct multiple t-test to determine if the difference in proportions of firms in each region is statistically significant by customer status.
+We conduct multiple t-tests to determine if the difference in proportions of firms in each region is statistically significant by customer status.
 
 ```{python}
 
@@ -121,14 +121,16 @@ ttest_ind(data[data['iscustomer'] == 1]['age'], data[data['iscustomer'] == 0]['a
 
 ```
 
-The t-test shows that the difference in proportions of firms in each region is statistically significant for the Midwest, Northeast, and Northwest regions at the 5% level. The t-test on average age of the firm shows that the difference in means of firm ages is statistically significant at the 5% level. Therefore, we should account for these differences in our analysis. We cannot conclude that the difference in the number of patents awarded is due to Blueprinty's software without controlling for these differences.
+The t-tests shows that the difference in proportions of firms in each region is statistically significant for the Midwest, Northeast, and Northwest regions at the 5% level. The t-test on average age of the firm shows that the difference in means of firm ages is statistically significant at the 5% level. 
+
+Therefore, we should account for these differences in our analysis. We cannot conclude that the difference in the number of patents awarded is due to Blueprinty's software without controlling for these differences.
 
 
 ### Estimation of Simple Poisson Model
 
 Since our outcome variable of interest can only be small integer values per a set unit of time, we can use a Poisson density to model the number of patents awarded to each engineering firm over the last 5 years. We start by estimating a simple Poisson model via Maximum Likelihood.
 
-_todo: Write down mathematically the likelihood for $Y \sim \text{Poisson}(\lambda)$. Note that $f(Y|\lambda) = e^{-\lambda}\lambda^Y/Y!$.
+We will write down the log-likelihood function for $Y \sim \text{Poisson}(\lambda)$ given the Poisson probability density function of $(Y|\lambda) = e^{-\lambda}\lambda^Y/Y!$.
 
 The log-likelihood function for a sample $( Y_1, Y_2, \ldots, Y_n)$ from a Poisson distribution with parameter $( \lambda)$ is given by:
 
@@ -136,13 +138,7 @@ $\ell(\lambda; y_1, y_2, \ldots, y_n) = \sum_{i=1}^n y_i \log(\lambda) - n\lambd
 
 
 
-_todo: Code the likelihood (or log-likelihood) function for the Poisson model. This is a function of lambda and Y. For example:_
-
-```
-poisson_loglikelihood <- function(lambda, Y){
-   ...
-}
-```
+Next, we will code the log-likelihood function for the Poisson model. This is a function of lambda and Y. The function should return the log-likelihood value for a given rate parameter lambda and a set of observed counts Y. 
 
 ```{python}
 import numpy as np
@@ -172,7 +168,7 @@ def poisson_loglikelihood(lambda_, Y):
 
 
 
-_todo: Use your function to plot lambda on the horizontal axis and the likelihood (or log-likelihood) on the vertical axis for a range of lambdas (use the observed number of patents as the input for Y)._
+We will use the above function to plot a range of  lambdas (0.1-10) on the horizontal axis and the log likelihood on the vertical axis. We will use the observed patent counts as Y. The maximum likelihood estimate (MLE) of lambda is the value that maximizes the log-likelihood function.
 
 ```{python}
 Y = data['patents'].values  # Extracting patent counts
@@ -191,12 +187,12 @@ plt.legend()
 plt.show()
 ```
 
-_todo: If you're feeling mathematical, take the first derivative of your likelihood or log-likelihood, set it equal to zero and solve for lambda. You will find lambda_mle is Ybar, which "feels right" because the mean of a Poisson distribution is lambda._
 
-_todo: Find the MLE by optimizing your likelihood function with optim() in R or sp.optimize() in Python._
+We will use optimization to find the MLE of lambda. We will use the `scipy.optimize.minimize` function to minimize the negative log-likelihood function. The negative log-likelihood is the negative of the log-likelihood function, which we want to minimize. We will set the bounds of the optimization to ensure that lambda is positive. 
+
+We will also calculate the mean number of patents per firm which should be close to the MLE of lambda since the Poisson distribution has only one parameter which is the rate parameter lambda. The mean of a Poisson distribution is equal to its rate parameter.
 
 ```{python}
-import numpy as np
 from scipy.optimize import minimize
 from scipy.special import gammaln
 
@@ -221,28 +217,22 @@ mean_patents = np.mean(Y)
 print("Mean number of patents per firm: ", mean_patents)
 
 ```
-
+As expected, the MLE of lambda is the same as the average number of patents per firm. This is because the Poisson distribution has only one parameter, the rate parameter lambda, which is equal to the mean of the distribution. 
 
 
 ### Estimation of Poisson Regression Model
 
 Next, we extend our simple Poisson model to a Poisson Regression Model such that $Y_i = \text{Poisson}(\lambda_i)$ where $\lambda_i = \exp(X_i'\beta)$. The interpretation is that the success rate of patent awards is not constant across all firms ($\lambda$) but rather is a function of firm characteristics $X_i$. Specifically, we will use the covariates age, age squared, region, and whether the firm is a customer of Blueprinty.
 
-_todo: Update your likelihood or log-likelihood function with an additional argument to take in a covariate matrix X. Also change the parameter of the model from lambda to the beta vector. In this model, lambda must be a positive number, so we choose the inverse link function g() to be exp() so that_ $\lambda_i = e^{X_i'\beta}$. _For example:_
+We will Update our log-likelihood function with an additional argument to take in a covariate matrix X. We will also change the parameter of the model from lambda to the beta vector. In this model, lambda must be a positive number, so we choose the inverse link function g() to be exp() so that_ $\lambda_i = e^{X_i'\beta}$. 
 
-```
-poisson_regression_likelihood <- function(beta, Y, X){
-   ...
-}
-```
+We will make sure that the first column of X are all 1's to enable a constant term in the model, and the subsequent columns are age, age squared, binary variables for all but one of the regions, and the binary iscustomer variable.
+
 
 ```{python}
 #| message: false
 #| echo: true
-
 import statsmodels.api as sm
-import numpy as np
-from scipy.special import gammaln
 
 # Prepare the covariate matrix X
 data['age_squared'] = data['age'] ** 2  # Add age squared
@@ -273,7 +263,7 @@ neg_log_likelihood(beta_initial, Y, X)
 ``` 
 
 
-_todo: Use your function along with R's optim() or Python's sp.optimize() to find the MLE vector and the Hessian of the Poisson model with covariates. Specifically, the first column of X should be all 1's to enable a constant term in the model, and the subsequent columns should be age, age squared, binary variables for all but one of the regions, and the binary customer variable. Use the Hessian to find standard errors of the beta parameter estimates and present a table of coefficients and standard errors._
+Next, we will use the updated function with scipy.optimize to find the MLE vector and the Hessian of the Poisson model with covariates. We will use the Hessian to find standard errors of the beta parameter.
 
 ```{python}
 from scipy.optimize import minimize
@@ -284,11 +274,10 @@ from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X[:, 1:])  # Assuming first column is intercept
 X_scaled = np.hstack((np.ones((X.shape[0], 1)), X_scaled))  # Add intercept back
-print(X_scaled)
+
 # Change optimization method and adjust initial guesses
-beta_initial = np.random.normal(loc=0.0, scale=0.1, size=X.shape[1])  # Random small values
-print(beta_initial)
-print(Y)
+beta_initial = np.random.normal(loc=0.0, scale=0.1, size=X.shape[1])  #
+
 
 result = minimize(
     neg_log_likelihood, beta_initial, args=(Y, X_scaled),
@@ -320,7 +309,7 @@ print(coefficients_table)
 ```
 
 
-_todo: Check your results using R's glm() function or Python sm.GLM() function._
+We will verify the results using Python's sm.GLM() function.
 
 ```{python}
 import statsmodels.api as sm
@@ -336,7 +325,10 @@ print(result.summary())
 
 ```
 
-_todo: Interpret the results. What do you conclude about the effect of Blueprinty's software on patent success?_
+Based on the Poisson regression model, the coefficients provide insights into the relationship between the covariates and the number of patents awarded. The coefficients for age and age squared are large and very significant suggesting that age of the firm has a significant impact on the number of patents awarded. The coefficient for the iscustomer variable is positive, indicating that firms using Blueprinty's software tend to have more patents awarded but the coefficient is much smaller than the age coefficient, suggesting that age is a more significant factor. The coefficients for the region variables are small and not statistically significant, indicating that regional location may not have a significant impact on the number of patents awarded.
+
+ Even though the average firm age of Blueprinty customers is lower than non-customers, the average number of patents awarded to customers is higher. This suggests that Blueprinty's software may be associated with higher patent awards even after accounting for the age factor. 
+
 
 
 ## AirBnB Case Study
@@ -367,6 +359,7 @@ AirBnB is a popular platform for booking short-term rentals. In March 2017, stud
 
 _todo: Assume the number of reviews is a good proxy for the number of bookings. Perform some exploratory data analysis to get a feel for the data, handle or drop observations with missing values on relevant variables, build one or more models (e.g., a poisson regression model for the number of bookings as proxied by the number of reviews), and interpret model coefficients to describe variation in the number of reviews as a function of the variables provided._
 
+We will start by reading in the data
 
 ```{python}
 airbnb_data = pd.read_csv("data/airbnb.csv")
@@ -374,6 +367,8 @@ airbnb_data = pd.read_csv("data/airbnb.csv")
 # Display the first few rows and summary statistics
 airbnb_data.head(), airbnb_data.describe()
 ```
+
+We will perform some data cleaning and transformation. We will convert date columns to datetime format, remove rows with missing values in host_since column since it has only 35 missing values, fill missing values for bathrooms and bedrooms (160 and 76 missing rows, respectively) with median, handle missing review scores by filling with median, convert instant_bookable to boolean, and remove the unnamed: 0 column.
 
 ```{python}
 # Convert date columns to datetime format
@@ -400,9 +395,10 @@ airbnb_data.drop('Unnamed: 0', axis=1, inplace=True)
 # Check for any remaining missing values and verify transformations
 airbnb_data.isnull().sum(), airbnb_data.head()
 
-
-
 ```
+
+We will perform some exploratory data analysis to get a feel for the data. We will plot histograms of key variables and a boxplot of price by room type.
+
 ```{python}
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -443,5 +439,102 @@ plt.show()
 ```
 
 
+
+Finally, we will build a Poisson regression model for the number of reviews as a function of the variables provided. We will use the `number_of_reviews` as the dependent variable and `days`, `room_type`, `bathrooms`, `bedrooms`, `price`, `review_scores_cleanliness`, `review_scores_location`, `review_scores_value`, and `instant_bookable` as independent variables. We will one-hot encode the `room_type` variable, standardize the features, and use the `scipy.optimize.minimize` function to find the MLE of the beta coefficients.
+
+
+```{python}
+
+from math import exp
+
+# Drop rows with missing values in relevant columns
+columns_to_keep = ['days', 'room_type', 'bathrooms', 'bedrooms', 'price', 
+                   'review_scores_cleanliness', 'review_scores_location', 
+                   'review_scores_value', 'instant_bookable', 'number_of_reviews']
+
+data_clean = airbnb_data[columns_to_keep]
+
+# One-hot encode categorical variables
+data_clean = pd.get_dummies(data_clean, columns=['room_type'], drop_first=True)
+
+
+# Separate features and target
+features = [col for col in data_clean.columns if col != 'number_of_reviews']
+X = data_clean[features].values
+Y = data_clean['number_of_reviews'].values
+
+# Add intercept column
+X = np.column_stack([np.ones(X.shape[0]), X])
+
+# Standardize features (excluding intercept)
+scaler = StandardScaler()
+X[:, 1:] = scaler.fit_transform(X[:, 1:])
+
+# Define a custom function for exponentiation
+def custom_exp(arr):
+    return np.array([exp(x) for x in arr])
+
+# Define the negative log-likelihood function for Poisson regression
+def neg_log_likelihood(beta, Y, X):
+    eta = np.dot(X, beta)
+    lambda_i = custom_exp(eta)  # Use the custom exponentiation function
+    log_likelihood = np.sum(Y * np.log(lambda_i) - lambda_i - gammaln(Y + 1))
+    return -log_likelihood
+
+# Initial guess for parameters
+beta_initial = np.zeros(X.shape[1])
+
+# Optimize to find the MLE of beta
+result = minimize(neg_log_likelihood, beta_initial, args=(Y, X), method='L-BFGS-B', options={'disp': True, 'maxiter': 500})
+
+# Extract results
+if result.success:
+    beta_mle = result.x
+else:
+    print("Optimization failed:", result.message)
+
+# Get coefficient names
+coeff_names = ['Intercept'] + features
+
+# Create a DataFrame to hold coefficients
+coef_df = pd.DataFrame({'Coefficient': coeff_names, 'Estimate': beta_mle})
+
+# Display the coefficients
+print(coef_df)
+```
+
+### Interpretation of Results
+
+The Poisson regression model provides estimates for the coefficients of the model. The coefficients represent the log of the rate of reviews for each unit. The interpretation of the coefficients is as follows:
+
+**Intercept (2.64):** Represents the baseline log count of bookings (as proxied by reviews) for the reference level of categorical variables when all other variables are at their reference levels or zero.
+
+**Days (0.40):** A positive coefficient indicates that as the number of days since the listing was created increases, the expected number of bookings increases. Specifically, for each additional day, the expected log count of bookings increases by approximately 0.40. This suggests that older listings tend to have more bookings, possibly due to accumulating reviews and gaining more visibility.
+
+**Bathrooms (-0.04):** A negative coefficient means that as the number of bathrooms increases, the expected number of bookings decreases. This might suggest that the number of bathrooms isn't a significant factor influencing bookings or that properties with more bathrooms have a different appeal.
+
+**Bedrooms (0.05):** A positive coefficient suggests that as the number of bedrooms increases, the expected number of bookings increases. This implies that larger properties (in terms of bedrooms) tend to attract more bookings, likely because they accommodate more guests.
+
+**Price (-0.05):** A small negative coefficient suggests that an increase in the listing price is associated with a slight decrease in the expected number of bookings. Higher prices may deter some potential customers, leading to fewer bookings.
+
+
+**Review Score Cleanliness (0.04):** A positive coefficient indicates that as the cleanliness score increases, the expected number of bookings increases. This means that customers value cleanliness, and highly-rated properties tend to have more bookings.
+
+**Review Score Location (-0.14):** A negative coefficient implies that higher location scores are associated with fewer bookings. While counterintuitive, this may indicate that other factors might be overshadowing location, or that listings in prime locations are more competitive.
+
+**Review Score Value (-0.13):** A negative coefficient means that higher value scores are associated with fewer bookings. This could imply that while customers value "value for money," this factor alone may not lead to more bookings.
+
+**Instant Bookable (0.19):** Listings that are instantly bookable tend to have more bookings than those that are not. This suggests that ease of booking is an important factor for customers when choosing properties.
+
+**Room Type: Private Room (-0.05):** Listings with private rooms have fewer bookings compared to the reference category (entire home/apt). This suggests private rooms may be less attractive to a larger customer base.
+    
+**Room Type: Shared Room (-0.04):**  Listings with shared rooms also have fewer bookings than the reference category. This indicates that shared rooms appeal to a niche market, leading to fewer bookings.
+
+
+### Conclusion
+
+The most important factors influencing the number of bookings (as proxied by reviews) for Airbnb listings in New York City include the number of days since the listing was created, and whether the listing is instantly bookable. These factors have the largest impact on bookings, with older listings and instantly bookable listings attracting more bookings. Other factors such as the number of bedrooms and bathrooms, price, and room type had a relatively smaller impact on bookings.There were some unexpected results, such as the negative coefficients for location and value review scores, which may require further investigation. 
+
+The model provides insights into the factors that drive bookings and can help hosts optimize their listings for better performance.
 
 
